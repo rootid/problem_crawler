@@ -1,0 +1,44 @@
+'Format cells
+Sub applyformats()
+  Dim sh As Worksheet
+  For Each sh In ActiveWorkbook.Sheets
+      sh.Activate
+      sh.Range("A2:D2").ColumnWidth = 20
+      sh.Range("A1:E100").WrapText = True
+      sh.Rows(1).HorizontalAlignment = xlCenter
+      sh.Rows(1).Font.Bold = True
+  Next sh
+End Sub
+
+'create Tables
+Sub createTable()
+  Dim sh As Worksheet
+  Dim lRow As Integer
+  Dim lCol As Integer
+  Dim shtName As String
+  For Each sh In ActiveWorkbook.Sheets
+      sh.Activate
+      shtName = sh.Name
+      lRow = sh.Cells(Rows.Count, "A").End(xlUp).Row
+      lCol = sh.Cells(1, Columns.Count).End(xlToLeft).Column
+      sh.ListObjects.Add(xlSrcRange, Range(Cells(1, 1), Cells(lRow, lCol)), , xlYes).Name = shtName & "_table"
+  Next sh
+End Sub
+
+'Make hyperlinks
+Sub makeHyperlinks()
+    Dim lngRow As Long
+    Dim lngCol As Long
+
+  lngCol = 2 ' look for cells in second col
+
+  For Each sh In ActiveWorkbook.Sheets
+      lngRow = 2 ' start first row
+      sh.Activate
+      shtName = sh.Name
+        Do Until IsEmpty(sh.Cells(lngRow, lngCol)) = True ' stop when found the first empty cell
+            sh.Hyperlinks.Add Anchor:=sh.Cells(lngRow, lngCol), Address:=sh.Cells(lngRow, lngCol)
+            lngRow = lngRow + 1
+        Loop
+  Next sh
+End Sub

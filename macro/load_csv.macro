@@ -1,0 +1,69 @@
+Option Explicit
+Sub ImportCSVs()
+
+'Summary:   Import all CSV files from a folder into separate sheets
+'           named for the CSV filenames
+'Modified script from - https://sites.google.com/a/madrocketscientist.com/jerrybeaucaires-excelassistant/merge-functions/csvs-to-sheets
+
+Dim fPath   As String
+Dim wbCSV   As Workbook
+Dim wbMST  As Workbook
+Dim i As Integer
+
+Dim csv(36) As String
+
+csv(1) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/array.csv"
+csv(2) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/backtracking.csv"
+csv(3) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/binary-indexed-tree.csv"
+csv(4) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/binary-search-tree.csv"
+csv(5) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/binary-search.csv"
+csv(6) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/bit-manipulation.csv"
+csv(7) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/brainteaser.csv"
+csv(8) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/breadth-first-search.csv"
+csv(9) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/depth-first-search.csv"
+csv(10) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/design.csv"
+csv(11) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/divide-and-conquer.csv"
+csv(12) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/dynamic-programming.csv"
+csv(13) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/geometry.csv"
+csv(14) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/graph.csv"
+csv(15) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/greedy.csv"
+csv(16) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/hash-table.csv"
+csv(17) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/heap.csv"
+csv(18) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/linked-list.csv"
+csv(19) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/map.csv"
+csv(20) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/math.csv"
+csv(21) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/memoization.csv"
+csv(22) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/minimax.csv"
+csv(23) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/queue.csv"
+csv(24) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/random.csv"
+csv(25) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/recursion.csv"
+csv(26) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/rejection-sampling.csv"
+csv(27) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/reservoir-sampling.csv"
+csv(28) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/segment-tree.csv"
+csv(29) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/sort.csv"
+csv(30) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/stack.csv"
+csv(31) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/string.csv"
+csv(32) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/topological-sort.csv"
+csv(33) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/tree.csv"
+csv(34) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/trie.csv"
+csv(35) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/two-pointers.csv"
+csv(36) = "/Users/visawant/gen-next/vagrant/shared/problem_crawler/target/union-find.csv"
+
+Set wbMST = ThisWorkbook
+
+Application.ScreenUpdating = False  'speed up macro
+Application.DisplayAlerts = False   'no error messages, take default answers
+
+
+For i = 1 To UBound(csv)
+  On Error Resume Next
+  Set wbCSV = Workbooks.Open(csv(i))                          'open a CSV file
+  wbMST.Sheets(ActiveSheet.Name).Delete                       'delete sheet if it exists
+  ActiveSheet.Move After:=wbMST.Sheets(wbMST.Sheets.Count)    'move new sheet into Mstr
+  Columns.AutoFit             'clean up display
+Next i
+
+Application.ScreenUpdating = True
+Set wbCSV = Nothing
+
+End Sub

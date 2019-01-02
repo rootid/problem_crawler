@@ -1,0 +1,23 @@
+
+Sub CreateTableofcontents()
+    Dim xAlerts As Boolean
+    Dim I  As Long
+    Dim xShtIndex As Worksheet
+    Dim xSht As Variant
+    xAlerts = Application.DisplayAlerts
+    Application.DisplayAlerts = False
+    On Error Resume Next
+    Sheets("Table of contents").Delete
+    On Error GoTo 0
+    Set xShtIndex = Sheets.Add(Sheets(1))
+    xShtIndex.Name = "Table of contents"
+    I = 1
+    Cells(1, 1).Value = "Table of contents"
+    For Each xSht In ThisWorkbook.Sheets
+        If xSht.Name <> "Table of contents" Then
+            I = I + 1
+            xShtIndex.Hyperlinks.Add Cells(I, 1), "", "'" & xSht.Name & "'!A1", , xSht.Name
+        End If
+    Next
+    Application.DisplayAlerts = xAlerts
+End Sub

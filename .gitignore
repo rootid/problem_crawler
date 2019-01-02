@@ -1,0 +1,6 @@
+pcw
+target
+
+geckodriver.log
+*.pyc
+*.out
